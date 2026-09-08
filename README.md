@@ -32,7 +32,7 @@ The current model covers:
 
 The operational time series contains historical records from 2018 and current public-source records through 2026. Years without a source snapshot are documented as data gaps and are not interpreted as proof of no activity.
 
-The consolidated database contains 163 5Ws records and 28 stakeholder entries. All three synchronized workbooks carry the same WorldPop scenario fields, Ebola-response records and source register.
+The consolidated database contains 163 5Ws records, 28 existing stakeholder entries and a dedicated register of 10 Ebola-response organisations. All three synchronized workbooks carry the same WorldPop scenario fields, Ebola-response records and source register.
 
 ## Methodology
 
@@ -74,6 +74,8 @@ The database includes 10 source-backed Ebola-response records. UNICEF EOC histor
 - **WorldPop DRC Population 2024 R2025A v1:** constrained 100 m raster used for locality planning scenarios. Dataset ID 73054; DOI `10.5258/SOTON/WP00839`; [catalogue record](https://hub.worldpop.org/geodata/summary?id=73054).
 - **UNICEF EOC Ebola response datasets:** historical 2018–2019 surveillance and psychosocial response records for Mambasa/Mandima health zones.
 - **INSP/INRB BDBV2026 public data:** preliminary 2026 surveillance and public-health response records for Mambasa and Wamba. [Repository](https://github.com/INRB-UMIE/BDBV2026-Data).
+
+The `Ebola Organisations` sheet identifies each response organisation, role, operation period, geographic scope, source and verification status. It includes INSP/INRB, UNICEF EOC, DRC Ministry of Health, WHO, OCHA, IOM, ALIMA, MSF, the DRC Red Cross and CDC. Organisations identified only in provincial or national response context are explicitly marked for local validation rather than treated as confirmed locality-level implementers.
 - **IOM DTM Ituri / HDX:** contextual displacement and needs information, including Mambasa.
 - **OpenStreetMap:** basemap tiles used by the interactive Leaflet map.
 
@@ -89,6 +91,7 @@ The intended public name is **OWR Stakeholder Map**. GitHub Pages derives its pr
 - `RFO_Stakeholders_Map.html` - standalone interactive Leaflet map.
 - `RFO_Stakeholders Final.xlsx` - consolidated 5Ws stakeholder database.
 - `RFO_Stackholder_db.xlsx` - standalone RFO stakeholder database.
+- `Ebola Organisations` sheet - source-backed Ebola-response organisation register included in all three workbooks.
 - `Mambasa_Humanitarian_3W_Matrix.xlsx` - working source workbook with historical and 5Ws sheets.
 
 ## Responsible use
