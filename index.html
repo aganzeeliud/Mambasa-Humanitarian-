@@ -82,6 +82,17 @@
     .info-card:hover, .territory-card:hover, .stat:hover { transform: translateY(-2px); transition: transform .2s ease; }
     .info-card h3 { margin: 0 0 9px; color: var(--navy); }
     .info-card p { margin: 0; color: var(--muted); line-height: 1.6; font-size: .92rem; }
+    .table-shell { background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 35px rgba(16,42,67,.07); }
+    .table-tools { display: flex; gap: 10px; flex-wrap: wrap; padding: 16px; border-bottom: 1px solid var(--line); background: #fbfdfe; }
+    .table-tools input, .table-tools select { min-width: 160px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); background: white; font: inherit; }
+    .table-tools input { flex: 1; min-width: 220px; }
+    .table-count { margin-left: auto; align-self: center; color: var(--muted); font-size: .82rem; }
+    .table-scroll { overflow-x: auto; }
+    .data-table { width: 100%; min-width: 950px; border-collapse: collapse; font-size: .82rem; }
+    .data-table th { padding: 13px 14px; text-align: left; color: white; background: var(--navy); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+    .data-table td { padding: 13px 14px; border-bottom: 1px solid #edf2f5; color: var(--ink); vertical-align: top; }
+    .data-table tbody tr:hover { background: var(--sky); }
+    .data-table td:nth-child(3) { color: var(--blue); font-weight: 700; }
     footer { background: var(--navy); color: #d9e2ec; padding: 28px 5vw; font-size: .85rem; }
     footer div { max-width: 1180px; margin: auto; display: flex; justify-content: space-between; gap: 20px; }
     @media (max-width: 780px) {
@@ -105,6 +116,7 @@
     <a class="brand" href="#"><span class="brand-mark">OWR</span><span>OWR Stakeholder Mapping</span></a>
     <div class="navlinks">
       <a href="#map-section">Operational map</a>
+      <a href="#data-table">Data table</a>
       <a href="#methodology">Methodology</a>
       <a href="#about">About the data</a>
       <a href="RFO_Stakeholders%20Final.xlsx">Download database</a>
@@ -165,6 +177,27 @@
         <iframe class="map-frame" title="OWR Stakeholder Mapping 5Ws operational map" src="./RFO_Stakeholders_Map.html" loading="eager" allowfullscreen></iframe>
       </div>
     </section>
+    <section class="section" id="data-table">
+      <div class="section-heading">
+        <div><h2>Stakeholder data table</h2><p>Filter the mapped locality register by territory, sector or keyword.</p></div>
+        <a class="button secondary" href="RFO_Stakeholders%20Final.xlsx">Download full 5Ws workbook</a>
+      </div>
+      <div class="table-shell">
+        <div class="table-tools">
+          <input id="table-search" type="search" placeholder="Search locality, organisation or activity" aria-label="Search stakeholder table">
+          <select id="table-territory" aria-label="Filter by territory"><option value="">All territories</option><option>Mambasa</option><option>Wamba</option><option>Watsa</option></select>
+          <select id="table-sector" aria-label="Filter by sector"><option value="">All sectors</option></select>
+          <span class="table-count" id="table-count">15 localities</span>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead><tr><th>Locality</th><th>Territory</th><th>5Ws records</th><th>Organisations</th><th>Sectors / clusters</th><th>Operation years</th><th>2024 population</th></tr></thead>
+            <tbody id="stakeholder-rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="source-line">The table summarises the 15 locality reference points used by the interactive map. See the workbook for row-level 5Ws records, WorldPop scenario estimates, source URLs and QA fields.</p>
+    </section>
     <section class="section" id="about">
       <div class="section-heading"><div><h2>About the data</h2><p>Designed for coordination, planning and partner validation.</p></div></div>
       <div class="info-grid">
@@ -187,5 +220,36 @@
     </section>
   </main>
   <footer><div><span>© 2026 OWR Stakeholder Mapping</span><span>Built for humanitarian information management</span></div></footer>
+  <script>
+    const tableData = [
+      ["Mambasa","Mambasa",32,"ADECO; Afrilam pour la Lutte Antimines; CORDAID RDC; IEDA Relief; INTERSOS; IRC; MEDES; MUSACA; SDC; TROCAIRE; UNHCR","Administration et gestion des sites; CASH; Multisectoriel; Nutrition; Protection; Santé; Sécurité Alimentaire","2018; 2018-2019; 2018-2020; 2025; 2025-2026; 2026",309169],
+      ["Babombi","Mambasa",2,"Wildlife Conservation Global (WCG)","Environnement; Éducation","2026",309169],
+      ["Bafwabete","Mambasa",2,"Wildlife Conservation Global (WCG)","Environnement; Éducation","2026",309169],
+      ["Biakato","Mambasa",7,"Action Contre La Faim (ACF); CARITAS Développement; Médecins Sans Frontières (MSF); PIDPA / ONGD; UNHCR; UNICEF","Protection; Santé; Sécurité alimentaire; WASH","2026",309169],
+      ["Nia-Nia","Mambasa",23,"ADECO; ACF; CARITAS Développement; CORDAID RDC; IEDA Relief; PIDPA / ONGD; SDC; Samaritan's Purse; UNHCR","Multisectoriel; Nutrition; Protection; Santé; Sécurité alimentaire","2018; 2018-2019; 2018-2020; 2025-2026; 2026",309169],
+      ["Ibambi","Wamba",4,"CARITAS Développement; Croix-Rouge de la RDC; UNICEF; World Vision","Protection; Santé; Sécurité alimentaire; WASH","2026",561587],
+      ["Lolwa","Mambasa",25,"AAI; AVUDS; CORDAID RDC; IEDA Relief; IRC; MUSACA; PAM; SDC","CASH; Eau, Hygiène et Assainissement; Education; Nutrition; Protection; Santé; Sécurité Alimentaire","2018-2020; 2025; 2025-2026; 2026",309169],
+      ["Mandima","Mambasa",23,"AAI; ADECO; AJCC; AJEDEC; CORDAID RDC; IEDA Relief; IRC; MUSACA; PAM; SDC; VESP","Education; Nutrition; Protection; Santé; Sécurité Alimentaire","2018-2019; 2018-2020; 2025; 2025-2026; 2026",309169],
+      ["Nyangwe","Mambasa",3,"Action Contre La Faim (ACF); Wildlife Conservation Global (WCG)","Environnement; Sécurité alimentaire; Éducation","2026",309169],
+      ["Pawa","Wamba",4,"CARITAS Développement; Croix-Rouge de la RDC; UNICEF; World Vision","Protection; Santé; Sécurité alimentaire; WASH","2026",561587],
+      ["Wamba Centre","Wamba",5,"Bureau Central de la Zone de Santé de Wamba; CARITAS Développement; Croix-Rouge de la RDC; UNICEF; World Vision","Protection; Santé; Sécurité alimentaire; WASH","2026",561587],
+      ["Watsa Centre","Watsa",6,"ACF; Bureau Central de la Zone de Santé de Watsa; CARITAS Développement; MSF; UNHCR","Protection; Santé; Sécurité alimentaire; WASH","2026",385896],
+      ["Durba","Watsa",5,"Action Contre La Faim (ACF); CARITAS Développement; Croix-Rouge de la RDC; Médecins Sans Frontières (MSF); UNHCR","Protection; Santé; Sécurité alimentaire; WASH","2026",385896],
+      ["Andrada","Watsa",5,"Action Contre La Faim (ACF); CARITAS Développement; Croix-Rouge de la RDC; Médecins Sans Frontières (MSF); UNHCR","Protection; Santé; Sécurité alimentaire; WASH","2026",385896]
+    ];
+    const sectors = new Set();
+    tableData.forEach(row => row[4].split("; ").forEach(sector => sectors.add(sector)));
+    [...sectors].sort().forEach(sector => document.getElementById("table-sector").add(new Option(sector, sector)));
+    const renderTable = () => {
+      const query = document.getElementById("table-search").value.toLowerCase().trim();
+      const territory = document.getElementById("table-territory").value;
+      const sector = document.getElementById("table-sector").value;
+      const rows = tableData.filter(row => (!territory || row[1] === territory) && (!sector || row[4].includes(sector)) && (!query || row.join(" ").toLowerCase().includes(query)));
+      document.getElementById("stakeholder-rows").innerHTML = rows.map(row => `<tr><td><b>${row[0]}</b></td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td><td>${row[5]}</td><td>${row[6].toLocaleString()}</td></tr>`).join("");
+      document.getElementById("table-count").textContent = `${rows.length} of ${tableData.length} localities`;
+    };
+    ["table-search","table-territory","table-sector"].forEach(id => document.getElementById(id).addEventListener("input", renderTable));
+    renderTable();
+  </script>
 </body>
 </html>
