@@ -29,6 +29,7 @@
     .navlinks { display: flex; gap: 20px; font-size: .9rem; color: var(--muted); }
     .navlinks a { text-decoration: none; }
     .navlinks a:hover { color: var(--blue); }
+    .language-toggle { display: inline-flex; align-items: center; gap: 6px; margin-left: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--blue); cursor: pointer; font: 750 .75rem inherit; }
     .hero { padding: 84px 5vw 70px; color: white; background: radial-gradient(circle at 85% 20%, rgba(33,161,121,.32), transparent 34%), linear-gradient(120deg, #0b1f33 0%, #123e55 62%, #176b87 100%); }
     .hero-inner { max-width: 1180px; margin: auto; display: grid; grid-template-columns: 1.15fr .85fr; gap: 48px; align-items: center; }
     .eyebrow { color: #8ee2cb; font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
@@ -133,6 +134,7 @@
       <a href="#methodology">Methodology</a>
       <a href="#about">About the data</a>
       <a href="RFO_Stakeholders%20Final.xlsx">Download database</a>
+      <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to French">FR</button>
     </div>
   </nav>
   <main>
@@ -242,6 +244,79 @@
   </main>
   <footer><div><span>© 2026 OWR Stakeholder Mapping</span><span>Built for humanitarian information management</span></div></footer>
   <script>
+    const translations = {
+      ".topbar span:first-child": ["Humanitarian information management | Democratic Republic of the Congo", "Gestion de l’information humanitaire | République démocratique du Congo"],
+      ".topbar span:last-child": ["Public-source edition | 2018–2026", "Édition fondée sur des sources publiques | 2018–2026"],
+      ".navlinks a[href='#workspace']": ["Workspace", "Espace de travail"],
+      ".navlinks a[href='#methodology']": ["Methodology", "Méthodologie"],
+      ".navlinks a[href='#about']": ["About the data", "À propos des données"],
+      ".navlinks a[href*='RFO_Stakeholders']": ["Download database", "Télécharger la base"],
+      ".eyebrow": ["5Ws operational coordination platform", "Plateforme de coordination opérationnelle 5W"],
+      ".hero h1": ["See who is doing what, where, when and why.", "Voyez qui fait quoi, où, quand et pourquoi."],
+      ".hero > .hero-inner > div:first-child p": ["A practical stakeholder and operations view for humanitarian coordination across Mambasa in Ituri and Wamba and Watsa in Haut-Uele.", "Un outil pratique de suivi des acteurs et des opérations humanitaires à Mambasa en Ituri, ainsi qu’à Wamba et Watsa dans le Haut-Uele."],
+      ".hero a.button.primary": ["Explore the map", "Explorer la carte"],
+      ".hero a.button.secondary": ["Download the final database", "Télécharger la base finale"],
+      ".hero-card h2": ["Decision-ready information", "Des informations utiles à la décision"],
+      ".hero-card li:nth-child(1)": ["Stakeholders, sectors and operational activities", "Acteurs, secteurs et activités opérationnelles"],
+      ".hero-card li:nth-child(2)": ["Locality-level map references for coordination", "Références cartographiques par localité pour la coordination"],
+      ".hero-card li:nth-child(3)": ["Historical and current operation years", "Années d’opération historiques et actuelles"],
+      ".hero-card li:nth-child(4)": ["WorldPop locality scenarios for intervention planning", "Scénarios WorldPop par localité pour la planification des interventions"],
+      ".stat:nth-child(1) .stat-label": ["Geographic scope", "Périmètre géographique"],
+      ".stat:nth-child(1) span:last-child": ["target territories", "territoires ciblés"],
+      ".stat:nth-child(2) .stat-label": ["Mapped footprint", "Emprise cartographiée"],
+      ".stat:nth-child(2) span:last-child": ["localities with reference points", "localités avec points de référence"],
+      ".stat:nth-child(3) .stat-label": ["Operational view", "Vue opérationnelle"],
+      ".stat:nth-child(3) span:last-child": ["5Ws records consolidated", "enregistrements 5W consolidés"],
+      ".stat:nth-child(4) .stat-label": ["Time series", "Série temporelle"],
+      ".stat:nth-child(4) span:last-child": ["documented operation period", "période d’opération documentée"],
+      ".section:nth-of-type(3) .section-heading h2": ["Coverage at a glance", "Aperçu de la couverture"],
+      ".section:nth-of-type(3) .section-heading p": ["Planning population estimates are territory-level denominators, not beneficiary counts.", "Les estimations de population sont des dénominateurs territoriaux de planification, pas des nombres de bénéficiaires."],
+      "#map-section h2": ["Operational stakeholder map", "Carte opérationnelle des acteurs"],
+      "#map-section .section-heading p": ["Filter by territory or sector inside the map.", "Filtrez par territoire ou secteur dans la carte."],
+      "#map-section .button.secondary": ["Open map separately", "Ouvrir la carte séparément"],
+      ".tab[data-tab='map-section']": ["Operational map", "Carte opérationnelle"],
+      ".tab[data-tab='data-table']": ["Data table", "Tableau des données"],
+      ".tab[data-tab='about']": ["About the data", "À propos des données"],
+      ".tab[data-tab='methodology']": ["Methodology", "Méthodologie"],
+      "#data-table h2": ["Stakeholder data table", "Tableau des acteurs"],
+      "#data-table .section-heading p": ["Filter the mapped locality register by territory, sector or keyword.", "Filtrez le registre des localités par territoire, secteur ou mot-clé."],
+      "#data-table .button.secondary": ["Download full 5Ws workbook", "Télécharger le fichier 5W complet"],
+      "#table-search": ["Search locality, organisation or activity", "Rechercher une localité, une organisation ou une activité"],
+      "#data-table .source-line": ["The table summarises the 15 locality reference points used by the interactive map. See the workbook for row-level 5Ws records, WorldPop scenario estimates, source URLs and QA fields.", "Le tableau résume les 15 points de référence utilisés par la carte interactive. Consultez le fichier pour les enregistrements 5W détaillés, les scénarios WorldPop, les sources et les champs qualité."],
+      ".data-table th:nth-child(1)": ["Locality", "Localité"],
+      ".data-table th:nth-child(2)": ["Territory", "Territoire"],
+      ".data-table th:nth-child(3)": ["5Ws records", "Enregistrements 5W"],
+      ".data-table th:nth-child(4)": ["Organisations", "Organisations"],
+      ".data-table th:nth-child(5)": ["Sectors / clusters", "Secteurs / clusters"],
+      ".data-table th:nth-child(6)": ["Operation years", "Années d’opération"],
+      ".data-table th:nth-child(7)": ["2024 population", "Population 2024"],
+      "#about h2": ["About the data", "À propos des données"],
+      "#about .section-heading p": ["Designed for coordination, planning and partner validation.", "Conçu pour la coordination, la planification et la validation avec les partenaires."],
+      "#methodology h2": ["Methodology & validation", "Méthodologie et validation"],
+      "#methodology .section-heading p": ["How the OWR Stakeholder Map is built and maintained.", "Comment la carte des acteurs OWR est construite et mise à jour."],
+      "footer span:first-child": ["© 2026 OWR Stakeholder Mapping", "© 2026 Cartographie des acteurs OWR"],
+      "footer span:last-child": ["Built for humanitarian information management", "Conçu pour la gestion de l’information humanitaire"]
+    };
+    let language = "en";
+    const setLanguage = (lang) => {
+      language = lang;
+      document.documentElement.lang = lang;
+      Object.entries(translations).forEach(([selector, values]) => {
+        const node = document.querySelector(selector);
+        if (!node) return;
+        if (node.tagName === "INPUT") node.placeholder = values[lang === "fr" ? 1 : 0];
+        else if (node.querySelector("svg")) {
+          const textNode = [...node.childNodes].find(child => child.nodeType === Node.TEXT_NODE);
+          if (textNode) textNode.nodeValue = values[lang === "fr" ? 1 : 0];
+        } else node.textContent = values[lang === "fr" ? 1 : 0];
+      });
+      document.querySelector("#table-territory option[value='']").textContent = lang === "fr" ? "Tous les territoires" : "All territories";
+      document.querySelector("#table-sector option[value='']").textContent = lang === "fr" ? "Tous les secteurs" : "All sectors";
+      document.querySelector("#language-toggle").textContent = lang === "fr" ? "EN" : "FR";
+      document.querySelector("#language-toggle").setAttribute("aria-label", lang === "fr" ? "Switch to English" : "Passer au français");
+      renderTable();
+    };
+    document.getElementById("language-toggle").addEventListener("click", () => setLanguage(language === "en" ? "fr" : "en"));
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".tab-panel");
     const refreshEmbeddedMap = () => {
@@ -294,7 +369,9 @@
       const sector = document.getElementById("table-sector").value;
       const rows = tableData.filter(row => (!territory || row[1] === territory) && (!sector || row[4].includes(sector)) && (!query || row.join(" ").toLowerCase().includes(query)));
       document.getElementById("stakeholder-rows").innerHTML = rows.map(row => `<tr><td><b>${row[0]}</b></td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[4]}</td><td>${row[5]}</td><td>${row[6].toLocaleString()}</td></tr>`).join("");
-      document.getElementById("table-count").textContent = `${rows.length} of ${tableData.length} localities`;
+      document.getElementById("table-count").textContent = language === "fr"
+        ? `${rows.length} sur ${tableData.length} localités`
+        : `${rows.length} of ${tableData.length} localities`;
     };
     ["table-search","table-territory","table-sector"].forEach(id => document.getElementById(id).addEventListener("input", renderTable));
     renderTable();
