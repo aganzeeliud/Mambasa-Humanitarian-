@@ -32,7 +32,7 @@ The current model covers:
 
 The operational time series contains historical records from 2018 and current public-source records through 2026. Years without a source snapshot are documented as data gaps and are not interpreted as proof of no activity.
 
-The consolidated database contains 153 5Ws records and 28 stakeholder entries. All three synchronized workbooks carry the same WorldPop scenario fields and source register.
+The consolidated database contains 163 5Ws records and 28 stakeholder entries. All three synchronized workbooks carry the same WorldPop scenario fields, Ebola-response records and source register.
 
 ## Methodology
 
@@ -52,6 +52,10 @@ WorldPop DRC 2024 constrained population data (R2025A v1, 100 m) is used to esti
 
 These values are planning scenarios only. They are not observed beneficiaries, approved targets or unique people reached. Coordinates and radius results require partner validation, and estimates must not be summed across interventions without deduplication.
 
+### Ebola response coverage
+
+The database includes 10 source-backed Ebola-response records. UNICEF EOC historical records document surveillance, psychosocial support, child protection and nutrition-related response activities in Mambasa and Mandima Health Zones during 2018–2019. Preliminary INSP/INRB BDBV monitoring records document surveillance, IPC/WASH, points of control, laboratory preparedness and community engagement in Mambasa and Wamba during 2026. Health zones are used as operational geography proxies for territory-level reporting. No verified Ebola-specific operation in Watsa was identified in the reviewed public sources; this is an evidence gap, not proof of no activity.
+
 ## Validation rules
 
 - A source-backed operation date is preferred over an inferred year.
@@ -68,6 +72,8 @@ These values are planning scenarios only. They are not observed beneficiaries, a
 - **OCHA DRC 3W National - May 2018 / HDX:** historical project and activity records, including Mambasa.
 - **HDX/OCHA DRC Subnational Population Statistics 2024:** health-zone projections aggregated to territory planning populations.
 - **WorldPop DRC Population 2024 R2025A v1:** constrained 100 m raster used for locality planning scenarios. Dataset ID 73054; DOI `10.5258/SOTON/WP00839`; [catalogue record](https://hub.worldpop.org/geodata/summary?id=73054).
+- **UNICEF EOC Ebola response datasets:** historical 2018–2019 surveillance and psychosocial response records for Mambasa/Mandima health zones.
+- **INSP/INRB BDBV2026 public data:** preliminary 2026 surveillance and public-health response records for Mambasa and Wamba. [Repository](https://github.com/INRB-UMIE/BDBV2026-Data).
 - **IOM DTM Ituri / HDX:** contextual displacement and needs information, including Mambasa.
 - **OpenStreetMap:** basemap tiles used by the interactive Leaflet map.
 
