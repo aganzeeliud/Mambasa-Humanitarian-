@@ -38,6 +38,7 @@
     .button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; text-decoration: none; font-weight: 750; font-size: .9rem; }
     .button.primary { background: var(--teal); color: white; box-shadow: 0 8px 20px rgba(33,161,121,.25); }
     .button.secondary { border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.09); color: white; }
+    .section .button.secondary { border-color: var(--line); background: white; color: var(--blue); }
     .hero-card { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 22px; padding: 28px; box-shadow: 0 18px 50px rgba(0,0,0,.16); backdrop-filter: blur(10px); }
     .hero-card h2 { margin: 0 0 18px; color: white; font-size: 1.1rem; }
     .hero-card ul { margin: 0; padding-left: 20px; color: #d6e7ea; line-height: 1.9; }
@@ -72,6 +73,19 @@
     .territory-meta span { padding: 5px 8px; border-radius: 999px; background: var(--sky); color: var(--blue); font-size: .72rem; font-weight: 750; }
     .card-kicker { margin: 0 0 8px; color: var(--blue); font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
     .source-line { margin-top: 16px; color: var(--muted); font-size: .78rem; }
+    .workspace { max-width: 1180px; margin: 0 auto; padding: 18px 5vw 0; }
+    .tabs { display: flex; gap: 8px; padding: 7px; background: #e8f0f2; border: 1px solid #d5e2e5; border-radius: 14px; overflow-x: auto; }
+    .tab { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 138px; padding: 12px 15px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; font: 750 .82rem inherit; white-space: nowrap; }
+    .tab svg { width: 17px; height: 17px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .tab:hover { color: var(--blue); background: rgba(255,255,255,.65); }
+    .tab.active { color: white; background: var(--navy); box-shadow: 0 5px 14px rgba(11,31,51,.18); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .section-intro { margin-bottom: 22px; }
+    .section-intro h2 { margin: 0 0 6px; color: var(--navy); font-size: 1.9rem; letter-spacing: -.03em; }
+    .section-intro p { margin: 0; color: var(--muted); }
+    .stat-icon { display: inline-grid; place-items: center; width: 25px; height: 25px; margin-right: 6px; border-radius: 7px; background: var(--sky); color: var(--blue); vertical-align: middle; }
+    .stat-icon svg { width: 15px; height: 15px; stroke: currentColor; fill: none; stroke-width: 1.8; }
     .map-shell { background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 35px rgba(16,42,67,.08); }
     .map-toolbar { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); }
     .map-toolbar strong { color: var(--navy); }
@@ -115,8 +129,7 @@
   <nav class="nav">
     <a class="brand" href="#"><span class="brand-mark">OWR</span><span>OWR Stakeholder Mapping</span></a>
     <div class="navlinks">
-      <a href="#map-section">Operational map</a>
-      <a href="#data-table">Data table</a>
+      <a href="#workspace">Workspace</a>
       <a href="#methodology">Methodology</a>
       <a href="#about">About the data</a>
       <a href="RFO_Stakeholders%20Final.xlsx">Download database</a>
@@ -147,10 +160,10 @@
     </section>
     <section class="section">
       <div class="stats">
-        <div class="stat"><span class="stat-label">Geographic scope</span><strong>3</strong><span>target territories</span></div>
-        <div class="stat"><span class="stat-label">Mapped footprint</span><strong>15</strong><span>localities with reference points</span></div>
-        <div class="stat"><span class="stat-label">Operational view</span><strong>153</strong><span>5Ws records consolidated</span></div>
-        <div class="stat"><span class="stat-label">Time series</span><strong>2018–26</strong><span>documented operation period</span></div>
+        <div class="stat"><span class="stat-label"><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-12A7 7 0 0 0 5 9c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2"/></svg></span>Geographic scope</span><strong>3</strong><span>target territories</span></div>
+        <div class="stat"><span class="stat-label"><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="m4 15 5-5 4 4 3-3 4 4"/></svg></span>Mapped footprint</span><strong>15</strong><span>localities with reference points</span></div>
+        <div class="stat"><span class="stat-label"><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 19V5m0 14h16"/><path d="m7 15 3-4 3 2 5-7"/></svg></span>Operational view</span><strong>153</strong><span>5Ws records consolidated</span></div>
+        <div class="stat"><span class="stat-label"><span class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></span>Time series</span><strong>2018–26</strong><span>documented operation period</span></div>
       </div>
       <div class="facts" aria-label="Key data facts">
         <div class="fact"><strong>1.26M</strong><span>estimated 2024 planning population across the three target territories</span></div>
@@ -167,7 +180,15 @@
       </div>
       <p class="source-line">Population source: HDX/OCHA DRC Subnational Population Statistics, 2024. Locality scenarios use the WorldPop DRC 2024 constrained raster within a 5 km reference radius. Operational records, QA flags and source notes are available in the downloadable database.</p>
     </section>
-    <section class="section" id="map-section">
+    <div class="workspace" id="workspace">
+      <div class="tabs" role="tablist" aria-label="OWR stakeholder workspace">
+        <button class="tab active" role="tab" aria-selected="true" aria-controls="map-section" data-tab="map-section"><svg viewBox="0 0 24 24"><path d="M4 6.5 9 4l6 2.5L20 4v13.5L15 20l-6-2.5L4 20Z"/><path d="M9 4v13.5M15 6.5V20"/></svg>Operational map</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="data-table" data-tab="data-table"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 10h16M9 5v14M15 5v14"/></svg>Data table</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="about" data-tab="about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8h.01"/></svg>About the data</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="methodology" data-tab="methodology"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Methodology</button>
+      </div>
+    </div>
+    <section class="section tab-panel active" id="map-section">
       <div class="section-heading">
         <div><h2>Operational stakeholder map</h2><p>Filter by territory or sector inside the map.</p></div>
         <a class="button secondary" href="RFO_Stakeholders_Map.html">Open map separately</a>
@@ -177,7 +198,7 @@
         <iframe class="map-frame" title="OWR Stakeholder Mapping 5Ws operational map" src="./RFO_Stakeholders_Map.html" loading="eager" allowfullscreen></iframe>
       </div>
     </section>
-    <section class="section" id="data-table">
+    <section class="section tab-panel" id="data-table">
       <div class="section-heading">
         <div><h2>Stakeholder data table</h2><p>Filter the mapped locality register by territory, sector or keyword.</p></div>
         <a class="button secondary" href="RFO_Stakeholders%20Final.xlsx">Download full 5Ws workbook</a>
@@ -198,7 +219,7 @@
       </div>
       <p class="source-line">The table summarises the 15 locality reference points used by the interactive map. See the workbook for row-level 5Ws records, WorldPop scenario estimates, source URLs and QA fields.</p>
     </section>
-    <section class="section" id="about">
+    <section class="section tab-panel" id="about">
       <div class="section-heading"><div><h2>About the data</h2><p>Designed for coordination, planning and partner validation.</p></div></div>
       <div class="info-grid">
         <article class="info-card"><h3>5Ws structure</h3><p>Each operational row is organised around Who, What, Where, When and Why, with supporting funding, population and verification fields.</p></article>
@@ -206,7 +227,7 @@
         <article class="info-card"><h3>Use with care</h3><p>Coordinates are approximate reference points. WorldPop values are scenario denominators and estimated beneficiaries must be validated with partners before reporting.</p></article>
       </div>
     </section>
-    <section class="section" id="methodology">
+    <section class="section tab-panel" id="methodology">
       <div class="section-heading"><div><h2>Methodology & validation</h2><p>How the OWR Stakeholder Map is built and maintained.</p></div></div>
       <div class="info-grid">
         <article class="info-card"><h3>1. Define the 5Ws</h3><p>Each record identifies <b>Who</b> is operating, <b>What</b> activity is delivered, <b>Where</b> it takes place, <b>When</b> it operates, and <b>Why</b> the intervention is needed.</p></article>
@@ -221,6 +242,26 @@
   </main>
   <footer><div><span>© 2026 OWR Stakeholder Mapping</span><span>Built for humanitarian information management</span></div></footer>
   <script>
+    const tabs = document.querySelectorAll(".tab");
+    const panels = document.querySelectorAll(".tab-panel");
+    const activateTab = (id) => {
+      tabs.forEach(tab => {
+        const active = tab.dataset.tab === id;
+        tab.classList.toggle("active", active);
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+      });
+      panels.forEach(panel => panel.classList.toggle("active", panel.id === id));
+      if (id === "map-section" && window.map) setTimeout(() => window.map.invalidateSize(), 80);
+    };
+    tabs.forEach(tab => tab.addEventListener("click", () => {
+      activateTab(tab.dataset.tab);
+      document.getElementById("workspace").scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
+    document.querySelectorAll('.navlinks a[href="#methodology"], .navlinks a[href="#about"]').forEach(link => link.addEventListener("click", event => {
+      event.preventDefault();
+      activateTab(link.getAttribute("href").slice(1));
+      document.getElementById("workspace").scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
     const tableData = [
       ["Mambasa","Mambasa",32,"ADECO; Afrilam pour la Lutte Antimines; CORDAID RDC; IEDA Relief; INTERSOS; IRC; MEDES; MUSACA; SDC; TROCAIRE; UNHCR","Administration et gestion des sites; CASH; Multisectoriel; Nutrition; Protection; Santé; Sécurité Alimentaire","2018; 2018-2019; 2018-2020; 2025; 2025-2026; 2026",309169],
       ["Babombi","Mambasa",2,"Wildlife Conservation Global (WCG)","Environnement; Éducation","2026",309169],
