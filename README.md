@@ -74,8 +74,11 @@ The database includes 10 source-backed Ebola-response records. UNICEF EOC histor
 - **WorldPop DRC Population 2024 R2025A v1:** constrained 100 m raster used for locality planning scenarios. Dataset ID 73054; DOI `10.5258/SOTON/WP00839`; [catalogue record](https://hub.worldpop.org/geodata/summary?id=73054).
 - **UNICEF EOC Ebola response datasets:** historical 2018–2019 surveillance and psychosocial response records for Mambasa/Mandima health zones.
 - **INSP/INRB BDBV2026 public data:** preliminary 2026 surveillance and public-health response records for Mambasa and Wamba. [Repository](https://github.com/INRB-UMIE/BDBV2026-Data).
+- **OCHA Financial Tracking Service:** published 2018–2019 Ebola response funding flows and 2026 BDBV emergency funding status. Funding flows are not disaggregated to Mambasa/Mandima unless explicitly stated.
 
 The `Ebola Organisations` sheet identifies each response organisation, role, operation period, geographic scope, source and verification status. It includes INSP/INRB, UNICEF EOC, DRC Ministry of Health, WHO, OCHA, IOM, ALIMA, MSF, the DRC Red Cross and CDC. Organisations identified only in provincial or national response context are explicitly marked for local validation rather than treated as confirmed locality-level implementers.
+
+The `Ebola Funding` sheet records 2018–2019 OCHA Financial Tracking Service transactions and the reviewed 2026 BDBV funding status. Published amounts are retained with the original currency basis, recipient, mechanism, date and geographic scope. The 2018–2019 transactions are province-level or regional and are not attributed to Mambasa/Mandima without a public local allocation. For 2026, no OCHA FTS transaction was returned for the BDBV emergency and no donor amount was publicly identified for Mambasa or Wamba; this is recorded as unavailable, not as proof of no funding.
 - **IOM DTM Ituri / HDX:** contextual displacement and needs information, including Mambasa.
 - **OpenStreetMap:** basemap tiles used by the interactive Leaflet map.
 
