@@ -1,6 +1,6 @@
 # OWR Stakeholder Map
 
-Interactive humanitarian 5Ws stakeholder map for Mambasa Territory in Ituri Province and Wamba and Watsa Territories in Haut-Uele, Democratic Republic of the Congo.
+Interactive humanitarian 5Ws/RFO stakeholder map for Mambasa Territory in Ituri Province and Wamba and Watsa Territories in Haut-Uele, Democratic Republic of the Congo. The public edition combines operational records, population planning denominators and clearly labelled WorldPop intervention scenarios.
 
 ## Public pages
 
@@ -32,6 +32,8 @@ The current model covers:
 
 The operational time series contains historical records from 2018 and current public-source records through 2026. Years without a source snapshot are documented as data gaps and are not interpreted as proof of no activity.
 
+The consolidated database contains 153 5Ws records and 28 stakeholder entries. All three synchronized workbooks carry the same WorldPop scenario fields and source register.
+
 ## Methodology
 
 1. **Define the 5Ws.** Every row is structured around Who, What, Where, When and Why.
@@ -41,6 +43,14 @@ The operational time series contains historical records from 2018 and current pu
 5. **Add evidence status.** Records are labelled as verified public-source records, workbook records requiring validation, or data gaps.
 6. **Validate with partners.** Partners and clusters should confirm current presence, activity, exact location, dates, beneficiaries, funder and budget.
 7. **Publish an update.** Corrections are made with a source note, verification note and reporting period.
+
+### WorldPop planning scenario
+
+WorldPop DRC 2024 constrained population data (R2025A v1, 100 m) is used to estimate the population around each approximate locality reference point. The workbook applies a 5 km radius and a 10% planning coverage factor:
+
+`Estimated beneficiaries per intervention = WorldPop locality population x 10%`
+
+These values are planning scenarios only. They are not observed beneficiaries, approved targets or unique people reached. Coordinates and radius results require partner validation, and estimates must not be summed across interventions without deduplication.
 
 ## Validation rules
 
@@ -57,6 +67,7 @@ The operational time series contains historical records from 2018 and current pu
 - **OCHA DRC Operational Presence / HDX:** current operational records, project dates, territories, actors and clusters.
 - **OCHA DRC 3W National - May 2018 / HDX:** historical project and activity records, including Mambasa.
 - **HDX/OCHA DRC Subnational Population Statistics 2024:** health-zone projections aggregated to territory planning populations.
+- **WorldPop DRC Population 2024 R2025A v1:** constrained 100 m raster used for locality planning scenarios. Dataset ID 73054; DOI `10.5258/SOTON/WP00839`; [catalogue record](https://hub.worldpop.org/geodata/summary?id=73054).
 - **IOM DTM Ituri / HDX:** contextual displacement and needs information, including Mambasa.
 - **OpenStreetMap:** basemap tiles used by the interactive Leaflet map.
 
@@ -68,9 +79,10 @@ The intended public name is **OWR Stakeholder Map**. GitHub Pages derives its pr
 
 ## Files
 
-- `index.html` - public landing page with data facts, methodology and embedded map.
+- `index.html` - public landing page with data facts, WorldPop caveats, methodology and embedded map.
 - `RFO_Stakeholders_Map.html` - standalone interactive Leaflet map.
 - `RFO_Stakeholders Final.xlsx` - consolidated 5Ws stakeholder database.
+- `RFO_Stackholder_db.xlsx` - standalone RFO stakeholder database.
 - `Mambasa_Humanitarian_3W_Matrix.xlsx` - working source workbook with historical and 5Ws sheets.
 
 ## Responsible use
