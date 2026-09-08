@@ -12,9 +12,12 @@
     header { padding: 12px 18px; background: #1f4e78; color: white; }
     header h1 { margin: 0 0 4px; font-size: 1.25rem; }
     header p { margin: 0; font-size: .9rem; }
-    #controls { display: flex; gap: 10px; flex-wrap: wrap; padding: 10px 18px; background: #eef4fb; }
+    #controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 10px 18px; background: #eef4fb; }
     #controls label { font-size: .85rem; font-weight: bold; }
-    select { margin-left: 5px; padding: 5px; }
+    select, input, button { margin-left: 5px; padding: 7px 9px; border: 1px solid #b8c7d9; border-radius: 5px; background: white; color: #17365d; }
+    button { cursor: pointer; font-weight: bold; }
+    button:hover { background: #dceaf7; }
+    .results { margin-left: auto; color: #1f4e78; font-size: .85rem; font-weight: bold; align-self: center; }
     #map { height: calc(100vh - 116px); min-height: 520px; }
     .popup h3 { margin: 0 0 8px; color: #1f4e78; }
     .popup p { margin: 5px 0; line-height: 1.35; }
@@ -36,6 +39,11 @@
     <label>Sector:
       <select id="sector"><option value="">All</option></select>
     </label>
+    <label>Search locality:
+    <input id="search" type="search" placeholder="e.g. Mambasa">
+    </label>
+    <button id="reset" type="button">Reset filters</button>
+    <span id="results" class="results"></span>
     <span class="note">Coordinates are approximate locality references, not facility-level GPS.</span>
   </div>
   <div id="map"></div>
@@ -84,16 +92,37 @@
       marker.bindPopup(popup(x)).addTo(map);
       markers.push({ marker, data: x });
     });
+    const allBounds = L.latLngBounds(locations.map(x => [x[1], x[2]]));
+    map.fitBounds(allBounds, { padding: [25, 25] });
     function filter() {
       const territory = document.getElementById("territory").value;
       const sector = sectorSelect.value;
+      const search = document.getElementById("search").value.trim().toLowerCase();
+      let visible = [];
       markers.forEach(item => {
-        const match = (!territory || item.data[3] === territory) && (!sector || item.data[6].includes(sector));
+        const match = (!territory || item.data[3] === territory) &&
+          (!sector || item.data[6].includes(sector)) &&
+          (!search || item.data[0].toLowerCase().includes(search) || item.data[3].toLowerCase().includes(search));
         if (match) item.marker.addTo(map); else map.removeLayer(item.marker);
+        if (match) visible.push(item);
       });
+      document.getElementById("results").textContent = `${visible.length} of ${markers.length} locations shown`;
+      if (visible.length) {
+        const bounds = L.latLngBounds(visible.map(item => [item.data[1], item.data[2]]));
+        map.fitBounds(bounds, { padding: [35, 35], maxZoom: 10 });
+      }
     }
     document.getElementById("territory").addEventListener("change", filter);
     sectorSelect.addEventListener("change", filter);
+    document.getElementById("search").addEventListener("input", filter);
+    document.getElementById("reset").addEventListener("click", () => {
+      document.getElementById("territory").value = "";
+      sectorSelect.value = "";
+      document.getElementById("search").value = "";
+      filter();
+      map.fitBounds(allBounds, { padding: [25, 25] });
+    });
+    filter();
     const legend = L.control({ position: "bottomright" });
     legend.onAdd = () => {
       const div = L.DomUtil.create("div", "legend");
