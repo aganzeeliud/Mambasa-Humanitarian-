@@ -12,19 +12,30 @@
     header { padding: 12px 18px; background: #1f4e78; color: white; }
     header h1 { margin: 0 0 4px; font-size: 1.25rem; }
     header p { margin: 0; font-size: .9rem; }
-    #controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 10px 18px; background: #eef4fb; }
-    #controls label { font-size: .85rem; font-weight: bold; }
-    select, input, button { margin-left: 5px; padding: 7px 9px; border: 1px solid #b8c7d9; border-radius: 5px; background: white; color: #17365d; }
+    #controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; padding: 12px 18px; background: #eef4fb; }
+    #controls label { display: flex; flex-direction: column; gap: 4px; font-size: .78rem; font-weight: bold; }
+    select, input, button { margin: 0; min-height: 36px; padding: 7px 9px; border: 1px solid #b8c7d9; border-radius: 5px; background: white; color: #17365d; font: inherit; }
     button { cursor: pointer; font-weight: bold; }
     button:hover { background: #dceaf7; }
     .results { margin-left: auto; color: #1f4e78; font-size: .85rem; font-weight: bold; align-self: center; }
-    #map { height: calc(100vh - 116px); min-height: 520px; }
+    #map { height: calc(100vh - 150px); min-height: 520px; }
     .popup h3 { margin: 0 0 8px; color: #1f4e78; }
     .popup p { margin: 5px 0; line-height: 1.35; }
     .legend { padding: 8px 10px; background: white; line-height: 1.5; box-shadow: 0 0 8px #999; }
     .dot { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 5px; }
     .mambasa { background: #2e75b6; } .wamba { background: #70ad47; } .watsa { background: #ed7d31; }
     .note { font-size: .78rem; color: #555; }
+    .empty { display: none; position: absolute; z-index: 500; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 12px 16px; border-radius: 7px; background: rgba(255,255,255,.94); color: #555; box-shadow: 0 2px 12px rgba(0,0,0,.18); }
+    @media (max-width: 640px) {
+      header { padding: 12px 14px; }
+      header h1 { font-size: 1.05rem; }
+      #controls { padding: 10px 14px; }
+      #controls label { flex: 1 1 42%; }
+      #controls label input, #controls label select { width: 100%; }
+      .results { width: 100%; margin-left: 0; }
+      .note { width: 100%; }
+      #map { height: calc(100vh - 275px); min-height: 440px; }
+    }
   </style>
 </head>
 <body>
@@ -47,6 +58,7 @@
     <span class="note">Coordinates are approximate locality references, not facility-level GPS.</span>
   </div>
   <div id="map"></div>
+  <div id="empty" class="empty">No locations match the selected filters.</div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
@@ -67,7 +79,8 @@
       ["Wamba Centre",2.14,27.99,"Wamba",5,"Bureau Central de la Zone de Santé de Wamba; CARITAS Développement; Croix-Rouge de la RDC; UNICEF; World Vision","Protection; Santé; Sécurité alimentaire; WASH","2026",561587],
       ["Watsa Centre",3.04,29.54,"Watsa",6,"ACF; Bureau Central de la Zone de Santé de Watsa; CARITAS Développement; Croix-Rouge de la RDC; MSF; UNHCR","Protection; Santé; Sécurité alimentaire; WASH","2026",385896]
     ];
-    const map = L.map("map").setView([1.75, 28.8], 7);
+    const map = L.map("map", { zoomControl: true }).setView([1.75, 28.8], 7);
+    window.OWRMap = map;
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
@@ -107,6 +120,7 @@
         if (match) visible.push(item);
       });
       document.getElementById("results").textContent = `${visible.length} of ${markers.length} locations shown`;
+      document.getElementById("empty").style.display = visible.length ? "none" : "block";
       if (visible.length) {
         const bounds = L.latLngBounds(visible.map(item => [item.data[1], item.data[2]]));
         map.fitBounds(bounds, { padding: [35, 35], maxZoom: 10 });

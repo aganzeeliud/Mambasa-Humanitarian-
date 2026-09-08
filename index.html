@@ -244,6 +244,12 @@
   <script>
     const tabs = document.querySelectorAll(".tab");
     const panels = document.querySelectorAll(".tab-panel");
+    const refreshEmbeddedMap = () => {
+      const frame = document.querySelector(".map-frame");
+      if (frame && frame.contentWindow && frame.contentWindow.OWRMap) {
+        setTimeout(() => frame.contentWindow.OWRMap.invalidateSize(), 100);
+      }
+    };
     const activateTab = (id) => {
       tabs.forEach(tab => {
         const active = tab.dataset.tab === id;
@@ -251,13 +257,14 @@
         tab.setAttribute("aria-selected", active ? "true" : "false");
       });
       panels.forEach(panel => panel.classList.toggle("active", panel.id === id));
-      if (id === "map-section" && window.map) setTimeout(() => window.map.invalidateSize(), 80);
+      if (id === "map-section") refreshEmbeddedMap();
     };
     tabs.forEach(tab => tab.addEventListener("click", () => {
       activateTab(tab.dataset.tab);
       document.getElementById("workspace").scrollIntoView({ behavior: "smooth", block: "start" });
     }));
-    document.querySelectorAll('.navlinks a[href="#methodology"], .navlinks a[href="#about"]').forEach(link => link.addEventListener("click", event => {
+    document.querySelector(".map-frame").addEventListener("load", refreshEmbeddedMap);
+    document.querySelectorAll('.navlinks a[href="#methodology"], .navlinks a[href="#about"], .hero a[href="#map-section"]').forEach(link => link.addEventListener("click", event => {
       event.preventDefault();
       activateTab(link.getAttribute("href").slice(1));
       document.getElementById("workspace").scrollIntoView({ behavior: "smooth", block: "start" });
