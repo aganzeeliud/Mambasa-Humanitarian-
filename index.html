@@ -48,6 +48,19 @@
     .stat { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
     .stat strong { display: block; color: var(--blue); font-size: 1.8rem; }
     .stat span { color: var(--muted); font-size: .85rem; }
+    .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+    .fact { position: relative; overflow: hidden; padding: 24px; border-radius: 14px; color: white; background: linear-gradient(135deg, var(--blue), #163a5c); }
+    .fact:nth-child(2) { background: linear-gradient(135deg, #3b6f45, #285331); }
+    .fact:nth-child(3) { background: linear-gradient(135deg, #bd6b24, #8d4817); }
+    .fact::after { content: ""; position: absolute; width: 120px; height: 120px; right: -34px; bottom: -55px; border: 18px solid rgba(255,255,255,.12); border-radius: 50%; }
+    .fact strong { display: block; margin-bottom: 6px; font-size: 2rem; letter-spacing: -.04em; }
+    .fact span { color: rgba(255,255,255,.82); font-size: .88rem; line-height: 1.45; }
+    .territories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .territory-card { padding: 22px; background: white; border: 1px solid var(--line); border-radius: 12px; }
+    .territory-card h3 { display: flex; justify-content: space-between; gap: 10px; margin: 0 0 12px; color: var(--navy); }
+    .territory-card h3 span { color: var(--blue); font-size: .82rem; white-space: nowrap; }
+    .territory-card p { margin: 0; color: var(--muted); line-height: 1.55; font-size: .9rem; }
+    .source-line { margin-top: 16px; color: var(--muted); font-size: .78rem; }
     .map-shell { background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 35px rgba(16,42,67,.08); }
     .map-toolbar { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); }
     .map-toolbar strong { color: var(--navy); }
@@ -65,6 +78,7 @@
       .hero-inner, .info-grid { grid-template-columns: 1fr; }
       .hero { padding-top: 48px; }
       .stats { grid-template-columns: repeat(2, 1fr); }
+      .facts, .territories { grid-template-columns: 1fr; }
       .section-heading, .map-toolbar, footer div { align-items: flex-start; flex-direction: column; }
       .map-frame { height: 680px; min-height: 620px; }
     }
@@ -96,10 +110,10 @@
           </div>
         </div>
         <div class="hero-card">
-          <h2>What this platform brings together</h2>
+          <h2>Decision-ready information</h2>
           <ul>
             <li>Stakeholders, sectors and operational activities</li>
-            <li>Locality-level approximate map references</li>
+            <li>Locality-level map references for coordination</li>
             <li>Historical and current operation years</li>
             <li>Population planning estimates and source notes</li>
           </ul>
@@ -113,6 +127,20 @@
         <div class="stat"><strong>153</strong><span>5Ws operational records</span></div>
         <div class="stat"><strong>2018–26</strong><span>documented operation period</span></div>
       </div>
+      <div class="facts" aria-label="Key data facts">
+        <div class="fact"><strong>1.26M</strong><span>estimated 2024 planning population across the three target territories</span></div>
+        <div class="fact"><strong>28</strong><span>stakeholders consolidated in the RFO stakeholder register</span></div>
+        <div class="fact"><strong>5Ws</strong><span>one shared structure for Who, What, Where, When and Why</span></div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="section-heading"><div><h2>Coverage at a glance</h2><p>Planning population estimates are territory-level denominators, not beneficiary counts.</p></div></div>
+      <div class="territories">
+        <article class="territory-card"><h3>Mambasa <span>Ituri</span></h3><p><b>309,169</b> estimated population · 104 operational records · 8 mapped localities</p></article>
+        <article class="territory-card"><h3>Wamba <span>Haut-Uele</span></h3><p><b>561,587</b> estimated population · 13 operational records · 3 mapped localities</p></article>
+        <article class="territory-card"><h3>Watsa <span>Haut-Uele</span></h3><p><b>385,896</b> estimated population · 16 operational records · 3 mapped localities</p></article>
+      </div>
+      <p class="source-line">Population source: HDX/OCHA DRC Subnational Population Statistics, 2024. Operational records and source notes are available in the downloadable database.</p>
     </section>
     <section class="section" id="map-section">
       <div class="section-heading">
